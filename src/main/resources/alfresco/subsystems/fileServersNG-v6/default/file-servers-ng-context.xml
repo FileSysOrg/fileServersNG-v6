@@ -785,34 +785,28 @@
         <property name="timeToExpire"><value>${filesystem.lockKeeperTimeout}</value></property>
     </bean>
 
-<!--
-## CronTriggerBean not available in Alfresco v6.x ##
-    <bean id="smbLockKeeperRefreshTrigger" class="org.alfresco.util.CronTriggerBean">
-        <property name="jobDetail">
-            <bean id="smbLockKeeperRefreshJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
-                <property name="jobClass">
-                    <value>org.filesys.alfresco.repo.LockKeeperRefreshJob</value>
-                </property>
-                <property name="jobDataAsMap">
-                    <map>
-                        <entry key="alfrescoLockKeeper">
-                            <ref bean="lockKeeper"/>
-                        </entry>
-                    </map>
-                </property>
-            </bean>
-        </property>
-        <property name="scheduler">
-            <ref bean="schedulerFactory" />
-        </property>
-        <property name="cronExpression">
-            <value>${filesystem.lockKeeperRefreshCronExpression}</value>
-        </property>
-        <property name="startDelayMinutes">
-            <value>${system.cronJob.startDelayMinutes}</value>
+    <bean id="smbLockKeeperRefreshSchedulerAccessor" class="org.springframework.scheduling.quartz.SchedulerAccessorBean">
+        <property name="scheduler" ref="schedulerFactory"/>
+        <property name="triggers">
+            <list>
+                <bean id="smbLockKeeperRefreshTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+                    <property name="cronExpression" value="${filesystem.lockKeeperRefreshCronExpression}"/>
+                    <property name="startDelay" value="${system.cronJob.startDelayMilliseconds}"/>
+                    <property name="jobDetail">
+                        <bean id="smbLockKeeperRefreshJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+                            <property name="jobClass" value="org.filesys.alfresco.repo.LockKeeperRefreshJob"/>
+                            <property name="jobDataAsMap">
+                                <map>
+                                    <entry key="alfrescoLockKeeper" value-ref="lockKeeper"/>
+                                </map>
+                            </property>
+                        </bean>
+                    </property>
+                </bean>
+            </list>
         </property>
     </bean>
--->
+
     <!-- Filesystem Interface -->
     <bean id="oldContentDiskDriver" class="org.filesys.alfresco.repo.ContentDiskDriver">
         <constructor-arg>
