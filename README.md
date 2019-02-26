@@ -1,42 +1,14 @@
-# Alfresco ACS JAR Module - SDK 4.0
+# fileServersNG
+The replacement Alfresco file servers subsystem based on the JFileServer file server code. 
 
-This is an ACS project for Alfresco SDK 4.0.
+Builds the fileServersNG-v6 AMP for Alfresco 6.0 using the Alfresco 4.0 SDK (currently beta).
 
-Run with `./run.sh build_start` or `./run.bat build_start` and verify that it
+To build the fileServersNG AMP use `mvn clean package`, this will create the fileServersNG-v6-1.0.0.amp
+file in the target/ folder.
 
- * Runs Alfresco Content Service (ACS)
- * (Optional) Runs Alfresco Share
- * Runs Alfresco Search Service (ASS)
- * Runs PostgreSQL database
- * Deploys the JAR assembled module
- 
-All the services of the project are now run as docker containers. The run script offers the next tasks:
+For more complete instructions on how to build and deploy the fileServersNG subsystem see
+[here](http://www.filesys.org/wiki/index.php/How_to_build_and_deploy_the_fileServersNG_subsystem).
 
- * `build_start`. Build the whole project, recreate the ACS docker image, start the dockerised environment composed by ACS, Share (optional), ASS 
- and PostgreSQL and tail the logs of all the containers.
- * `start`. Start the dockerised environment without building the project and tail the logs of all the containers.
- * `stop`. Stop the dockerised environment.
- * `purge`. Stop the dockerised container and delete all the persistent data (docker volumes).
- * `tail`. Tail the logs of all the containers.
- * `reload_acs`. Build the ACS module, recreate the ACS docker image and restart the ACS container.
- * `build_test`. Build the whole project, recreate the ACS docker image, start the dockerised environment, execute the integration tests and stop 
- the environment.
- * `test`. Execute the integration tests (the environment must be already started).
-
-# Few things to notice
-
- * No parent pom
- * No WAR projects, the jars are included in the custom docker images
- * No runner project - the Alfresco environment is now managed through [Docker](https://www.docker.com/)
- * Standard JAR packaging and layout
- * Works seamlessly with Eclipse and IntelliJ IDEA
- * JRebel for hot reloading, JRebel maven plugin for generating rebel.xml [JRebel integration documentation]
- * AMP as an assembly
- * Persistent test data through restart thanks to the use of Docker volumes for ACS, ASS and database data
- * Resources loaded from META-INF
- * Web Fragment (this includes a sample servlet configured via web fragment)
-
-# TODO
-
-  * Abstract assembly into a dependency so we don't have to ship the assembly in the archetype
-  * Functional/remote unit tests
+A Docker image is available containing an Alfresco 6.0 installation with the fileServersNG file server
+replacement subsystem deployed, see [here](http://www.filesys.org/wiki/index.php/Using_the_fileServersNG_Docker_Image)
+for details of how to download and configure the Docker image.
