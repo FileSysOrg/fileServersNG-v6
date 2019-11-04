@@ -32,6 +32,7 @@ import java.util.StringTokenizer;
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.filesys.server.auth.ISMBAuthenticator;
 import org.filesys.smb.DialectSelector;
+import org.filesys.smb.server.SMBV1VirtualCircuitList;
 import org.filesys.smb.server.VirtualCircuitList;
 
 import static org.filesys.alfresco.AbstractServerConfigurationBean.MaxSessionTimeout;
@@ -105,7 +106,7 @@ public class SMBConfigBean
     private Integer sessionTimeout;
 
     // Maximum virtual circuits per session
-    private int m_maxVC = VirtualCircuitList.DefMaxCircuits;
+    private int m_maxVC = SMBV1VirtualCircuitList.DefMaxCircuits;
     
     // Terminal server address list
     private List<String> terminalServerList;

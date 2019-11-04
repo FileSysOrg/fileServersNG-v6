@@ -78,6 +78,7 @@ import org.filesys.server.filesys.cache.hazelcast.ClusterConfigSection;
 import org.filesys.server.thread.ThreadRequestPool;
 import org.filesys.smb.DialectSelector;
 import org.filesys.smb.server.SMBConfigSection;
+import org.filesys.smb.server.SMBV1VirtualCircuitList;
 import org.filesys.smb.server.VirtualCircuitList;
 import org.filesys.util.IPAddress;
 import org.filesys.util.MemorySize;
@@ -405,9 +406,9 @@ public class ServerConfigurationBean extends AbstractServerConfigurationBean imp
 
             // Set the maximum virtual circuits per session
             
-            if ( smbConfigBean.getMaximumVirtualCircuits() < VirtualCircuitList.MinCircuits ||
-            		smbConfigBean.getMaximumVirtualCircuits() > VirtualCircuitList.MaxCircuits)
-            	throw new AlfrescoRuntimeException("Invalid virtual circuits value, valid range is " + VirtualCircuitList.MinCircuits + " - " + VirtualCircuitList.MaxCircuits);
+            if ( smbConfigBean.getMaximumVirtualCircuits() < SMBV1VirtualCircuitList.MinCircuits ||
+            		smbConfigBean.getMaximumVirtualCircuits() > SMBV1VirtualCircuitList.MaxCircuits)
+            	throw new AlfrescoRuntimeException("Invalid virtual circuits value, valid range is " + SMBV1VirtualCircuitList.MinCircuits + " - " + SMBV1VirtualCircuitList.MaxCircuits);
             else
             	smbConfig.setMaximumVirtualCircuits( smbConfigBean.getMaximumVirtualCircuits());
             

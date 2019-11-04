@@ -5,7 +5,7 @@
 
     <groupId>org.filesys</groupId>
     <artifactId>fileServersNG-v6</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 
     <name>fileServersNG-v6 - New file server subsystem using JFileServer - SDK 4</name>
     <description>Platform/Repo JAR Module (to be included in the alfresco.war)</description>
@@ -87,13 +87,13 @@
         <dependency>
             <groupId>org.filesys</groupId>
             <artifactId>jfileserver-alfresco-embed</artifactId>
-            <version>1.1.8</version>
+            <version>1.1.10</version>
         </dependency>
 
         <dependency>
             <groupId>org.filesys</groupId>
             <artifactId>jfileserver-enterprise</artifactId>
-            <version>1.0.6</version>
+            <version>1.0.8</version>
         </dependency>
 
         <!-- Hazelcast clustering -->
@@ -121,14 +121,14 @@
         <dependency>
             <groupId>com.license4j</groupId>
             <artifactId>license4j-runtime-library</artifactId>
-            <version>RELEASE</version>
+            <version>4.7.3</version>
         </dependency>
 
         <!-- BouncyCastle crypto library -->
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.48</version>
+            <version>1.64</version>
             <scope>provided</scope>
         </dependency>
 
