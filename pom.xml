@@ -87,13 +87,13 @@
         <dependency>
             <groupId>org.filesys</groupId>
             <artifactId>jfileserver-alfresco-embed</artifactId>
-            <version>1.1.11</version>
+            <version>1.2.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.filesys</groupId>
             <artifactId>jfileserver-enterprise</artifactId>
-            <version>1.0.9</version>
+            <version>1.1.0</version>
         </dependency>
 
         <!-- Hazelcast clustering -->
