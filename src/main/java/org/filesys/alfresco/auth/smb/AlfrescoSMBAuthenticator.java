@@ -41,6 +41,7 @@ import org.filesys.server.filesys.DiskInterface;
 import org.filesys.smb.SMBStatus;
 import org.filesys.smb.server.SMBSrvException;
 import org.filesys.smb.server.SMBSrvSession;
+import org.filesys.smb.server.smbv2.auth.V2EnterpriseSMBAuthenticator;
 import org.ietf.jgss.Oid;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -49,6 +50,9 @@ import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 import java.util.Vector;
@@ -60,7 +64,7 @@ import java.util.Vector;
  *
  * @author gkspencer
  */
-public class AlfrescoSMBAuthenticator extends EnterpriseSMBAuthenticator
+public class AlfrescoSMBAuthenticator extends V2EnterpriseSMBAuthenticator
     implements TransactionalSMBAuthenticator, ActivateableBean, InitializingBean, DisposableBean {
 
     // Logging
@@ -269,6 +273,52 @@ public class AlfrescoSMBAuthenticator extends EnterpriseSMBAuthenticator
         m_stripKerberosUsernameSuffix = stripKerberosUsernameSuffix;
     }
 
+    /**
+     * Set the Kerberos configuration path
+     *
+     * @param krbConfPath String
+     */
+    public void setKerberosConfiguration(String krbConfPath) {
+
+        if ( krbConfPath != null && krbConfPath.length() > 0) {
+
+            // Make sure the Kerberos configuration file exists
+            if (Files.exists( Paths.get( krbConfPath), LinkOption.NOFOLLOW_LINKS)) {
+
+                // Set the Kerberos configuration path
+                System.setProperty( "java.security.krb5.conf", krbConfPath);
+            }
+            else {
+
+                // Configuration file does not exist
+                throw new AlfrescoRuntimeException("Kerberos configuration file does not exist - " + krbConfPath);
+            }
+        }
+    }
+
+    /**
+     * Set the Java login configuration path
+     *
+     * @param loginConfPath String
+     */
+    public void setLoginConfiguration(String loginConfPath) {
+
+        if ( loginConfPath != null && loginConfPath.length() > 0) {
+
+            // Make sure the login configuration file exists
+            if (Files.exists( Paths.get( loginConfPath), LinkOption.NOFOLLOW_LINKS)) {
+
+                // Set the login configuration path
+                System.setProperty( "java.security.auth.login.config", loginConfPath);
+            }
+            else {
+
+                // Configuration file does not exist
+                throw new AlfrescoRuntimeException("Login configuration file does not exist - " + loginConfPath);
+            }
+        }
+    }
+
     /*
      * (non-Javadoc)
      * @see org.alfresco.repo.management.subsystems.ActivateableBean#isActive()
@@ -321,10 +371,10 @@ public class AlfrescoSMBAuthenticator extends EnterpriseSMBAuthenticator
         {
 
             // Get the SMB service account password
-            if (m_password == null || m_password.length() == 0)
-            {
-                throw new InvalidConfigurationException("SMB service account password not specified");
-            }
+//            if (m_password == null || m_password.length() == 0)
+//            {
+//                throw new InvalidConfigurationException("SMB service account password not specified");
+//            }
 
             // Get the login configuration entry name
             if (m_loginEntryName == null || m_loginEntryName.length() == 0)

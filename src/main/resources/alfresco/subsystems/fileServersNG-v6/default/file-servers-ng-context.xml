@@ -4,6 +4,27 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- The chaining authentication component -->
+    <bean id="chainingAuthenticationComponent"
+          class="org.alfresco.repo.security.authentication.subsystems.SubsystemChainingAuthenticationComponent"
+          parent="authenticationComponentBase">
+        <property name="nodeService">
+            <ref bean="nodeService" />
+        </property>
+        <property name="personService">
+            <ref bean="personService" />
+        </property>
+        <property name="transactionService">
+            <ref bean="transactionService" />
+        </property>
+        <property name="applicationContextManager">
+            <ref bean="Authentication" />
+        </property>
+        <property name="sourceBeanName">
+            <value>authenticationComponent</value>
+        </property>
+    </bean>
+
     <!-- Copied from alfrescoNtlm authentication subsystem -->
     <bean id="authenticationComponent" class="org.alfresco.repo.security.authentication.AuthenticationComponentImpl"
           parent="authenticationComponentBase">
@@ -100,7 +121,7 @@
             <ref bean="authenticationService" />
         </property>
         <property name="authenticationComponent">
-            <ref bean="authenticationComponent" />
+            <ref bean="chainingAuthenticationComponent" />
         </property>
         <property name="nodeService">
             <ref bean="NodeService" />
@@ -124,6 +145,43 @@
 
         <property name="sessionCleanup">
             <value>${alfresco.authentication.sessionCleanup}</value>
+        </property>
+
+        <property name="disableNTLM">
+            <value>${smb.disableNTLM}</value>
+        </property>
+
+        <property name="disallowNTLMv1">
+            <value>${smb.disallowNTLMv1}</value>
+        </property>
+
+        <property name="useSPNEGO">
+            <value>${smb.useSPNEGO}</value>
+        </property>
+
+        <!-- Kerberos authentication related properties -->
+        <property name="realm">
+            <value>${smb.kerberos.realm}</value>
+        </property>
+
+        <property name="stripKerberosUsernameSuffix">
+            <value>${smb.kerberos.stripUsernameSuffix}</value>
+        </property>
+
+        <property name="kerberosDebug">
+            <value>${smb.kerberos.debug}</value>
+        </property>
+
+        <property name="jaasConfigEntryName">
+            <value>${smb.kerberos.loginEntryName}</value>
+        </property>
+
+        <property name="kerberosConfiguration">
+            <value>${smb.kerberos.config}</value>
+        </property>
+
+        <property name="loginConfiguration">
+            <value>${smb.login.config}</value>
         </property>
     </bean>
 
