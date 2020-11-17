@@ -485,18 +485,6 @@ public class AlfrescoSMBAuthenticator extends V2EnterpriseSMBAuthenticator
         {
             // Use raw NTLMSSP security blobs
         }
-
-        // Make sure that either Kerberos support is enabled and/or the authentication component supports MD4 hashed passwords
-        if (!isKerberosEnabled() && (!(getAuthenticationComponent() instanceof NLTMAuthenticator) || getNTLMAuthenticator().getNTLMMode() != NTLMMode.MD4_PROVIDER))
-        {
-            if(logger.isDebugEnabled())
-            {
-                logger.debug("No valid SMB authentication combination available, Either enable Kerberos support or use an SSO-enabled authentication component that supports MD4 hashed passwords");
-            }
-
-            // Throw an exception to stop the SMB server startup
-            throw new AlfrescoRuntimeException("No valid SMB authentication combination available, Either enable Kerberos support or use an SSO-enabled authentication component that supports MD4 hashed passwords");
-        }
     }
 
     /**
