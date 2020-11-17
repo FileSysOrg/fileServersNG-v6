@@ -81,18 +81,18 @@ public class ScenarioDeleteRenameOrCreate implements Scenario
         if(operation instanceof CloseFileOperation)
         {          
             CloseFileOperation c = (CloseFileOperation)operation;
-            
-            Matcher m = pattern.matcher(c.getName());
-            if(m.matches() && c.getNetworkFile().hasDeleteOnClose())
-            {
-                if(logger.isDebugEnabled())
-                {
-                    logger.debug("New Scenario ScenarioDeleteRenameOrCreate strPattern:" + pattern);
+
+            if ( c.getName() != null) {
+                Matcher m = pattern.matcher(c.getName());
+                if (m.matches() && c.getNetworkFile().hasDeleteOnClose()) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("New Scenario ScenarioDeleteRenameOrCreate strPattern:" + pattern);
+                    }
+                    ScenarioDeleteRenameOrCreateInstance instance = new ScenarioDeleteRenameOrCreateInstance();
+                    instance.setTimeout(timeout);
+                    instance.setRanking(ranking);
+                    return instance;
                 }
-                ScenarioDeleteRenameOrCreateInstance instance = new ScenarioDeleteRenameOrCreateInstance();
-                instance.setTimeout(timeout);
-                instance.setRanking(ranking);
-                return instance;
             }
         }
         
